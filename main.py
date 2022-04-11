@@ -1,14 +1,11 @@
-from upbit.client import Upbit
+import func
 
+# dict0 = func.get_1min_Upbit("KRW-BTC")
 
-"""
-    Upbit client do get the 1 minute candle for the tradingpair KRW-BTC
-"""
-client = Upbit()
-resp = client.Candle.Candle_minutes(
-    unit=1, # 1-min. candle
-    market='KRW-BTC', #Traingpair
-    count= 1   # 60 candles
-    #to="2022-04-10 16:00:00"  #yyyy-MM-dd HH:mm:ss
-)
-print(resp['result'])
+# print(dict0)
+
+# dict1 = func.get_1min_Coinbase("BTC-USD")
+
+# print(dict1)
+
+func.get_1min_Bitpanda("BTC_EUR")
