@@ -13,9 +13,7 @@ import DB_func
 # print(dict_1min_candles["Bitstamp"])
 
 dict_FX_rate = func.get_FX_exchange_rate("EUR","USD", rate_dezimal_too_long=False)
-
 DB_func.write_FX_rate(dict_FX_rate)
 
 dict_FX_rate = func.get_FX_exchange_rate("KRW","USD", rate_dezimal_too_long=True)
-
 DB_func.write_FX_rate(dict_FX_rate)

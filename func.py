@@ -21,7 +21,7 @@ def get_1min_Upbit(tradingpair):
 
     return {
         "tradingpair": resp['result'][1]['market'],
-        #"timestamp": resp['result'][0]['candle_date_time_utc'][:10] + ' ' + resp['result'][0]['candle_date_time_utc'][11:],
+        "exchange": "Upbit (Korea)",
         "timestamp": str(datetime.fromtimestamp(int(str(resp["result"][1]["timestamp"])[:10]))),
         "price_low": resp['result'][1]['low_price'],
         "price_high": resp['result'][1]['high_price'],
@@ -43,6 +43,7 @@ def get_1min_Coinbase(tradingpair):
 
     return {
         "tradingpair": tradingpair,
+        "exchange": "Coinbase (USA)",
         "timestamp": str(datetime.fromtimestamp(json_response[1][0])),
         "price_low": json_response[1][1],
         "price_high": json_response[1][2],
@@ -64,6 +65,7 @@ def get_1min_Bitstamp(tradingpair):
 
     return {
         "tradingpair": json_response["data"]["pair"][:3] + "-" + json_response["data"]["pair"][4:],
+        "exchange": "Bitstamp (EU)",
         "timestamp": str(datetime.fromtimestamp(int(json_response["data"]["ohlc"][0]["timestamp"]))),
         "price_low": json_response["data"]["ohlc"][0]["low"],
         "price_high": json_response["data"]["ohlc"][0]["high"],
@@ -104,12 +106,16 @@ def get_FX_exchange_rate(base, quote, rate_dezimal_too_long):
     }
 
 
+def recalc_price_in_USD():
+    pass
+
+
+def calc_1min_candle(dict_1min_candles):
+    pass
 
 
 
 """
-    Bitpanda: get the 1 minute candle for the tradingpair
-
     WAS NOT USED. VOLUME ON EXCHANGE IS TO LOW: 
 """
 def get_1min_Bitpanda(tradingpair):
