@@ -11,5 +11,21 @@
     "candle_acc_trade_price": 100714006.50498,
     "candle_acc_trade_volume": 1.87798372,
     "unit": 1
+  },
+
+
+  {
+    "base_currency_code": "USD",
+    "base_currency_name": "United States dollar",
+    "amount": "1.0000",
+    "updated_date": "2022-04-12",
+    "rates": {
+      "KRW": {
+        "currency_name": "South Korean won",
+        "rate": "1230.7600",
+        "rate_for_amount": "1230.7600"
+      }
+    },
+    "status": "success"
   }
 ]

@@ -1,13 +1,21 @@
 import func
+import DB_func
 
-dict0 = func.get_1min_Upbit("KRW-BTC")
+# DB_func.create_fx_rate_table()
+# DB_func.create_1min_candle_table()
 
-print(dict0)
+# dict_1min_candles = {}
+# dict_1min_candles["Upbit"] = func.get_1min_Upbit("KRW-BTC")
+# dict_1min_candles["Coinbase"] = func.get_1min_Coinbase("BTC-USD")
+# dict_1min_candles["Bitstamp"] = func.get_1min_Bitstamp("btceur")
+# print(dict_1min_candles["Upbit"])
+# print(dict_1min_candles["Coinbase"])
+# print(dict_1min_candles["Bitstamp"])
 
-dict1 = func.get_1min_Coinbase("BTC-USD")
+dict_FX_rate = func.get_FX_exchange_rate("EUR","USD", rate_dezimal_too_long=False)
 
-print(dict1)
+DB_func.write_FX_rate(dict_FX_rate)
 
-dict2 = func.get_1min_Bitstamp("btceur")
+dict_FX_rate = func.get_FX_exchange_rate("KRW","USD", rate_dezimal_too_long=True)
 
-print(dict2)
+DB_func.write_FX_rate(dict_FX_rate)
