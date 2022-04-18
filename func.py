@@ -2,14 +2,15 @@ from upbit.client import Upbit
 import requests
 import json
 from datetime import datetime, timedelta
+import DB_func
 
 
 
 """
-    We always take the 1-minute candle that is 1 min ago. If we take the latest, the candle is still developing (not done yet)
-
-    Upbit: Upbit-client do get the 1 minute candle for the tradingpair
+    We always take the 1-minute candle that is 1 min ago. 
+    If we take the latest, the candle is still developing (not done yet)
 """
+# Upbit: Upbit-client do get the 1 minute candle for the tradingpair
 def get_1min_Upbit(tradingpair):
     client = Upbit()
     resp = client.Candle.Candle_minutes(
@@ -19,10 +20,13 @@ def get_1min_Upbit(tradingpair):
         #to="2022-04-10 16:00:00"  #yyyy-MM-dd HH:mm:ss
     )
 
+    time = datetime.fromtimestamp(int(str(resp["result"][1]["timestamp"])[:10])) 
+    time_no_sec = time - timedelta(seconds=int(time.second))
+
     return {
         "tradingpair": resp['result'][1]['market'],
         "exchange": "Upbit",
-        "timestamp": str(datetime.fromtimestamp(int(str(resp["result"][1]["timestamp"])[:10]))),
+        "timestamp": str(time_no_sec),
         "price_low": float(resp['result'][1]['low_price']),
         "price_high": float(resp['result'][1]['high_price']),
         "price_close": float(resp['result'][1]['trade_price']),
@@ -30,11 +34,7 @@ def get_1min_Upbit(tradingpair):
     }
 
 
-
-
-"""
-    Coinbase: get the 1 minute candle for the tradingpair
-"""
+# Coinbase: get the 1 minute candle for the tradingpair
 def get_1min_Coinbase(tradingpair):
 
     url = f"https://api.exchange.coinbase.com/products/{tradingpair}/candles?granularity=60"
@@ -52,11 +52,7 @@ def get_1min_Coinbase(tradingpair):
     }
 
 
-
-
-"""
-    Bitstamp: get 1 minute candle from the given tradingpair
-"""
+# Bitstamp: get 1 minute candle from the given tradingpair
 def get_1min_Bitstamp(tradingpair):
 
     url = f"https://www.bitstamp.net/api/v2/ohlc/{tradingpair}/?step=60&limit=2"
@@ -74,10 +70,7 @@ def get_1min_Bitstamp(tradingpair):
     }
 
 
-
-"""
-    Get the current FX exchange rates for KRW -> USD and EUR -> USD
-"""
+# Get the current FX exchange rates for KRW -> USD and EUR -> USD
 def get_FX_exchange_rate(base, quote, rate_dezimal_too_long):
 
     api_key = "529ea55ae0ef21448defc7955877504d06729ff4"
@@ -106,17 +99,32 @@ def get_FX_exchange_rate(base, quote, rate_dezimal_too_long):
     }
 
 
-def recalc_price_in_USD():
-    pass
+# recalc the prices in USD based on the latest FX exchange rate found in the database
+def recalc_price_in_USD(candle_org):
+    candle = candle_org
+
+    if candle["tradingpair"] == "KRW-BTC":
+        latest_FX_rate = DB_func.read_FX_rate("KRW-USD")[0]
+    elif candle["tradingpair"] == "BTC-EUR":
+        latest_FX_rate = DB_func.read_FX_rate("EUR-USD")[0]
+    else:
+        latest_FX_rate = 1
+
+    candle["FX_rate"] = latest_FX_rate
+    candle["price_low_USD"] = round(candle["price_low"] * latest_FX_rate, 2)
+    candle["price_high_USD"] = round(candle["price_high"] * latest_FX_rate, 2)
+    candle["price_close_USD"] = round(candle["price_close"] * latest_FX_rate, 2)
+
+    return candle
 
 # Calculate the average price and the vwap for the min (price*volume)
 def calc_avg_price_and_vwap1min(candle_org):
     candle = candle_org
     
     # Average price is calc by adding price_low, price_high and price_close divided by 3
-    candle["avg_price"] = (candle["price_low"] + candle["price_high"] + candle["price_close"]) / 3
+    candle["avg_price_USD"] = round((candle["price_low_USD"] + candle["price_high_USD"] + candle["price_close_USD"]) / 3, 2)
 
-    candle["VWAP_1min"] = candle["avg_price"] * candle["volume"]
+    candle["VWAP_1min"] = round(candle["avg_price_USD"] * candle["volume"], 2)
 
     return candle
 
@@ -125,9 +133,8 @@ def calc_avg_price_and_vwap1min(candle_org):
 
 
 
-"""
-    WAS NOT USED. VOLUME ON EXCHANGE IS TO LOW: 
-"""
+
+# WAS NOT USED. VOLUME ON EXCHANGE IS TO LOW: 
 def get_1min_Bitpanda(tradingpair):
 
     t_now = datetime.utcnow()
