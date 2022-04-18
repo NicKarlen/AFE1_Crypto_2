@@ -21,12 +21,12 @@ def get_1min_Upbit(tradingpair):
 
     return {
         "tradingpair": resp['result'][1]['market'],
-        "exchange": "Upbit (Korea)",
+        "exchange": "Upbit",
         "timestamp": str(datetime.fromtimestamp(int(str(resp["result"][1]["timestamp"])[:10]))),
-        "price_low": resp['result'][1]['low_price'],
-        "price_high": resp['result'][1]['high_price'],
-        "price_close": resp['result'][1]['trade_price'],
-        "volume": resp['result'][1]['candle_acc_trade_volume']
+        "price_low": float(resp['result'][1]['low_price']),
+        "price_high": float(resp['result'][1]['high_price']),
+        "price_close": float(resp['result'][1]['trade_price']),
+        "volume": float(resp['result'][1]['candle_acc_trade_volume'])
     }
 
 
@@ -43,12 +43,12 @@ def get_1min_Coinbase(tradingpair):
 
     return {
         "tradingpair": tradingpair,
-        "exchange": "Coinbase (USA)",
+        "exchange": "Coinbase",
         "timestamp": str(datetime.fromtimestamp(json_response[1][0])),
-        "price_low": json_response[1][1],
-        "price_high": json_response[1][2],
-        "price_close": json_response[1][4],
-        "volume": json_response[1][5]
+        "price_low": float(json_response[1][1]),
+        "price_high": float(json_response[1][2]),
+        "price_close": float(json_response[1][4]),
+        "volume": float(json_response[1][5])
     }
 
 
@@ -65,12 +65,12 @@ def get_1min_Bitstamp(tradingpair):
 
     return {
         "tradingpair": json_response["data"]["pair"][:3] + "-" + json_response["data"]["pair"][4:],
-        "exchange": "Bitstamp (EU)",
+        "exchange": "Bitstamp",
         "timestamp": str(datetime.fromtimestamp(int(json_response["data"]["ohlc"][0]["timestamp"]))),
-        "price_low": json_response["data"]["ohlc"][0]["low"],
-        "price_high": json_response["data"]["ohlc"][0]["high"],
-        "price_close": json_response["data"]["ohlc"][0]["close"],
-        "volume": json_response["data"]["ohlc"][0]["volume"]
+        "price_low": float(json_response["data"]["ohlc"][0]["low"]),
+        "price_high": float(json_response["data"]["ohlc"][0]["high"]),
+        "price_close": float(json_response["data"]["ohlc"][0]["close"]),
+        "volume": float(json_response["data"]["ohlc"][0]["volume"])
     }
 
 
@@ -109,9 +109,19 @@ def get_FX_exchange_rate(base, quote, rate_dezimal_too_long):
 def recalc_price_in_USD():
     pass
 
+# Calculate the average price and the vwap for the min (price*volume)
+def calc_avg_price_and_vwap1min(candle_org):
+    candle = candle_org
+    
+    # Average price is calc by adding price_low, price_high and price_close divided by 3
+    candle["avg_price"] = (candle["price_low"] + candle["price_high"] + candle["price_close"]) / 3
 
-def calc_1min_candle(dict_1min_candles):
-    pass
+    candle["VWAP_1min"] = candle["avg_price"] * candle["volume"]
+
+    return candle
+
+
+    
 
 
 
