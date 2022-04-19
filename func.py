@@ -20,13 +20,13 @@ def get_1min_Upbit(tradingpair):
         #to="2022-04-10 16:00:00"  #yyyy-MM-dd HH:mm:ss
     )
 
-    time = datetime.fromtimestamp(int(str(resp["result"][1]["timestamp"])[:10])) 
-    time_no_sec = time - timedelta(seconds=int(time.second))
+    print(resp)
+    timestamp = datetime.fromisoformat(resp["result"][1]["candle_date_time_utc"]) + timedelta(hours=2)
 
     return {
         "tradingpair": resp['result'][1]['market'],
         "exchange": "Upbit",
-        "timestamp": str(time_no_sec),
+        "timestamp": str(timestamp),
         "price_low": float(resp['result'][1]['low_price']),
         "price_high": float(resp['result'][1]['high_price']),
         "price_close": float(resp['result'][1]['trade_price']),
@@ -128,8 +128,36 @@ def calc_avg_price_and_vwap1min(candle_org):
 
     return candle
 
+# Calculate the VWAP_1h for the last 60min
+def calc_VWAP_1h(tradingpair):
+    sum_VWAP1min = 0
+    sum_volume1min = 0
 
+    # SELECT tradingpair, timestamp, exchange, volume, avg_price_USD, VWAP_1min
+    #           0           1           2         3         4           5
+    arr_data_last_hour = DB_func.read_One_Min_Candles(tradingpair)
+
+    for ele in arr_data_last_hour:
+        sum_VWAP1min += ele[5]
+        sum_volume1min += ele[3]
     
+    return {
+        "tradingpair" : arr_data_last_hour[0][0],
+        "timestamp" : arr_data_last_hour[0][1],
+        "exchange" : arr_data_last_hour[0][2],
+        "moving_avg_VWAP1h" : round(sum_VWAP1min/sum_volume1min, 2),
+        "timestamp_from" : arr_data_last_hour[59][1],
+        "timestamp_to" : arr_data_last_hour[0][1]
+    }
+
+# Calculate the arbitrage index form the moving avg. of the VWAP_1h
+def calc_arb_idx():
+    pass
+
+
+
+
+
 
 
 

@@ -12,8 +12,6 @@
     "candle_acc_trade_volume": 1.87798372,
     "unit": 1
   },
-
-
   {
     "base_currency_code": "USD",
     "base_currency_name": "United States dollar",
@@ -29,3 +27,69 @@
     "status": "success"
   }
 ]
+
+{'remaining_request': {'group': 'candles', 'min': '599', 'sec': '9'
+  }, 'response': {'url': 'https: //api.upbit.com/v1/candles/minutes/1?market=KRW-BTC&count=2', 'headers': {'Date': 'Tue, 19 Apr 2022 05:52:32 GMT', 'Content-Type': 'application/json;charset=UTF-8', 'Transfer-Encoding': 
+  'chunked', 'Connection': 'keep-alive', 'Limit-By-IP': 'Yes', 'Remaining-Req': 'group=candles; min=599; sec=9', 'Vary': 'origin,access-control-request-method,access-control-request-headers,accept-encoding', 'X-Frame-Options': 'DENY', 'Expires': '0', 'ETag': 'W/"01e5ea88be8740aafde858b9229e8a406"', 'X-Content-Type-Options': 'nosniff', 'X-XSS-Protection': '1; mode=block', 'Cache-Control': 'no-cache, no-store, max-age=0, must-revalidate', 'Pragma': 'no-cache', 'Content-Encoding': 'gzip'
+  }, 'status_code': 200, 'reason': '', 'text': '[
+    {
+      "market": "KRW-BTC",
+      "candle_date_time_utc": "2022-04-19T05:52:00",
+      "candle_date_time_kst": "2022-04-19T14:52:00",
+      "opening_price": 50712000.00000000,
+      "high_price": 50713000.00000000,
+      "low_price": 50712000.00000000,
+      "trade_price": 50713000.00000000,
+      "timestamp": 1650347552427,
+      "candle_acc_trade_price": 11115640.34842000,
+      "candle_acc_trade_volume": 0.21918983,
+      "unit": 1
+    },
+    {
+      "market": "KRW-BTC",
+      "candle_date_time_utc": "2022-04-19T05:51:00",
+      "candle_date_time_kst": "2022-04-19T14:51:00",
+      "opening_price": 50716000.00000000,
+      "high_price": 50717000.00000000,
+      "low_price": 50712000.00000000,
+      "trade_price": 50713000.00000000,
+      "timestamp": 1650347516319,
+      "candle_acc_trade_price": 37953597.51811000,
+      "candle_acc_trade_volume": 0.74837984,
+      "unit": 1
+    }
+  ]', 'content': b'[
+    {
+      "market": "KRW-BTC",
+      "candle_date_time_utc": "2022-04-19T05:52:00",
+      "candle_date_time_kst": "2022-04-19T14:52:00",
+      "opening_price": 50712000.00000000,
+      "high_price": 50713000.00000000,
+      "low_price": 50712000.00000000,
+      "trade_price": 50713000.00000000,
+      "timestamp": 1650347552427,
+      "candle_acc_trade_price": 11115640.34842000,
+      "candle_acc_trade_volume": 0.21918983,
+      "unit": 1
+    },
+    {
+      "market": "KRW-BTC",
+      "candle_date_time_utc": "2022-04-19T05:51:00",
+      "candle_date_time_kst": "2022-04-19T14:51:00",
+      "opening_price": 50716000.00000000,
+      "high_price": 50717000.00000000,
+      "low_price": 50712000.00000000,
+      "trade_price": 50713000.00000000,
+      "timestamp": 1650347516319,
+      "candle_acc_trade_price": 37953597.51811000,
+      "candle_acc_trade_volume": 0.74837984,
+      "unit": 1
+    }
+  ]', 'ok': True
+}, 'result': [
+  {'market': 'KRW-BTC', 'candle_date_time_utc': '2022-04-19T05: 52: 00', 'candle_date_time_kst': '2022-04-19T14: 52: 00', 'opening_price': 50712000.0, 'high_price': 50713000.0, 'low_price': 50712000.0, 'trade_price': 50713000.0, 'timestamp': 1650347552427, 'candle_acc_trade_price': 11115640.34842, 'candle_acc_trade_volume': 0.21918983, 'unit': 1
+  },
+  {'market': 'KRW-BTC', 'candle_date_time_utc': '2022-04-19T05: 51: 00', 'candle_date_time_kst': '2022-04-19T14: 51: 00', 'opening_price': 50716000.0, 'high_price': 50717000.0, 'low_price': 50712000.0, 'trade_price': 50713000.0, 'timestamp': 1650347516319, 'candle_acc_trade_price': 37953597.51811, 'candle_acc_trade_volume': 0.74837984, 'unit': 1
+  }
+]
+}
