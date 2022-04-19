@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, timedelta
 from time import sleep
 import func
 import DB_func
@@ -12,7 +12,8 @@ dict_1min_candles = []
 def step_0():
     # DB_func.create_fx_rate_table()
     # DB_func.create_1min_candle_table()
-    DB_func.create_VWAP1h()
+    # DB_func.create_VWAP1h()
+    DB_func.create_Arb_idx()
 
 """ Get 1 min candle from the exchanges """
 def step_1(): 
@@ -59,9 +60,13 @@ def step_5():
     DB_func.write_VWAP1h(func.calc_VWAP_1h("BTC-USD"))
     DB_func.write_VWAP1h(func.calc_VWAP_1h("BTC-EUR"))
 
+""" Calc arbitrage index based on the moving avg. VWAP_1h """
+def step_6():
+    DB_func.write_arb_idx(func.calc_arb_idx())
 
 """ RUN modes """    
 def auto_run():
+    time_start = datetime.utcnow()
     count_minutes = 0
     while True:
         time_now = datetime.utcnow()
@@ -74,7 +79,12 @@ def auto_run():
             dict_1min_candles_org = step_1()
             dict_1min_candles_in_USD = step_3(dict_1min_candles_org)
             step_4(dict_1min_candles_in_USD)
-            step_5()
+
+            # wait for 65 min until we have enough recorded 1min candles
+            if time_start + timedelta(minutes=65) < time_now:
+                step_5()
+                step_6()
+
             count_minutes += 1
             print(time_now, count_minutes)
             time.sleep(30)
@@ -82,18 +92,19 @@ def auto_run():
 def manual_run():
     # step_0()
     # dict_1min_candles_org = step_1()
-    # step_2() # Only call every hour (max calls 100/day)
+    step_2() # Only call every hour (max calls 100/day)
     # dict_1min_candles_in_USD = step_3(dict_1min_candles_org)
     # step_4(dict_1min_candles_in_USD)
-    step_5()
+    # step_5()
+    # step_6()
 
 
 """ Main """
 if __name__ == "__main__":
     print("Code running..........")
 
-    # auto_run()
+    auto_run()
 
-    manual_run()
+    # manual_run()
 
     print("Code finished.........")

@@ -88,6 +88,30 @@ def create_VWAP1h():
     # Close our connection
     conn.close()
 
+# Create a table for the arbitrage Index
+def create_Arb_idx():
+    # Connect to database 'database.db' or create one if it doesn't exist.
+    conn = sqlite3.connect('data/database.db')
+
+    # Create a cursor for db
+    cursor = conn.cursor()
+
+    # Create a table
+    cursor.execute("""CREATE TABLE Arbitrage_Index (
+        commen_currency TEXT,
+        timestamp TEXT,
+        exchanges TEXT,
+        VWAP_1h_min REAL,
+        VWAP_1h_max REAL,
+        arbitrage_index REAL
+        )""")
+
+    # Commit our command
+    conn.commit()
+
+    # Close our connection
+    conn.close()
+
 
 """
     Write in tables on the DB
@@ -175,6 +199,33 @@ def write_VWAP1h(dict_VWAP1h):
     # Close our connection
     conn.close()
 
+# Write the Arbitrage Index in the DB
+def write_arb_idx(dict_arb_idx):
+
+    # Connect to database 'database.db'
+    conn = sqlite3.connect('data/database.db')
+
+    # Create a cursor for db
+    cursor = conn.cursor()
+
+    # write a table to store in the database
+    new_values = [(dict_arb_idx["commen_currency"],
+               dict_arb_idx["timestamp"],
+               dict_arb_idx["exchanges"],
+               dict_arb_idx["VWAP_1h_min"],
+               dict_arb_idx["VWAP_1h_max"],
+               dict_arb_idx["arbitrage_index"]
+               )]
+
+    cursor.executemany(
+        "INSERT INTO Arbitrage_Index VALUES (?,?,?,?,?,?)", new_values)
+
+    # Commit our command
+    conn.commit()
+
+    # Close our connection
+    conn.close()
+
 
 """
     Read in tables on the DB
@@ -210,8 +261,26 @@ def read_One_Min_Candles(tradingpair):
 
     # Create query string
     query = f"SELECT tradingpair, timestamp, exchange, volume, avg_price_USD, VWAP_1min FROM One_Min_Candles WHERE tradingpair LIKE '{tradingpair}' ORDER BY timestamp DESC LIMIT 60"
-    
-    print(query)
+    cursor.execute(query)
+
+    # fetch it from the db and print it to the console
+    res = cursor.fetchall()
+
+    # Close our connection
+    conn.close()
+
+    return res
+
+# Read Moving_avg_VWAP1h from the last minute from all 3 exchanges.
+def read_Moving_avg_VWAP1h():
+    # Connect to database 'database.db'
+    conn = sqlite3.connect('data/database.db')
+
+    # Create a cursor for db
+    cursor = conn.cursor()
+
+    # Create query string
+    query = f"SELECT * FROM Moving_avg_VWAP1h ORDER BY timestamp DESC LIMIT 3"
     cursor.execute(query)
 
     # fetch it from the db and print it to the console

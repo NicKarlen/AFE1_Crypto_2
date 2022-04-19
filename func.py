@@ -20,7 +20,6 @@ def get_1min_Upbit(tradingpair):
         #to="2022-04-10 16:00:00"  #yyyy-MM-dd HH:mm:ss
     )
 
-    print(resp)
     timestamp = datetime.fromisoformat(resp["result"][1]["candle_date_time_utc"]) + timedelta(hours=2)
 
     return {
@@ -152,7 +151,28 @@ def calc_VWAP_1h(tradingpair):
 
 # Calculate the arbitrage index form the moving avg. of the VWAP_1h
 def calc_arb_idx():
-    pass
+
+    # SELECT tradingpair, timestamp, exchange, moving_avg_VWAP1h, timestamp_from, timestamp_to
+    #           0           1           2               3                4           5          
+    arr_latest_VWAP1h = DB_func.read_Moving_avg_VWAP1h()
+    
+    min_VWAP1h = min(arr_latest_VWAP1h[0][3], arr_latest_VWAP1h[1][3], arr_latest_VWAP1h[2][3])
+    max_VWAP1h = max(arr_latest_VWAP1h[0][3], arr_latest_VWAP1h[1][3], arr_latest_VWAP1h[2][3])
+
+    arb_idx = round(max_VWAP1h / min_VWAP1h, 6)
+
+    return {
+        "commen_currency" : "BTC",
+        "timestamp" : arr_latest_VWAP1h[0][1],
+        "exchanges" : arr_latest_VWAP1h[0][2] + "/" + arr_latest_VWAP1h[1][2] + "/" + arr_latest_VWAP1h[2][2],
+        "VWAP_1h_min" : min_VWAP1h,
+        "VWAP_1h_max" : max_VWAP1h,
+        "arbitrage_index" : arb_idx
+    }
+
+    
+
+
 
 
 
