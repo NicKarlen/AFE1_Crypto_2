@@ -27,7 +27,7 @@ def get_1min_Upbit(tradingpair):
     req = requests.get(url)
     json_response = json.loads(req.text)
 
-    print(json_response)
+    # adjust timestamp from Upbit
     timestamp = datetime.fromisoformat(json_response[1]["candle_date_time_utc"]) + timedelta(hours=2)
 
     return {
