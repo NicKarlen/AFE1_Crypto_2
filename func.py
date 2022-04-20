@@ -1,4 +1,4 @@
-from upbit.client import Upbit
+# from upbit.client import Upbit
 import requests
 import json
 from datetime import datetime, timedelta
@@ -11,25 +11,33 @@ import DB_func
     If we take the latest, the candle is still developing (not done yet)
 """
 # Upbit: Upbit-client do get the 1 minute candle for the tradingpair
-def get_1min_Upbit(tradingpair):
-    client = Upbit()
-    resp = client.Candle.Candle_minutes(
-        unit=1, # 1-min. candle
-        market= tradingpair, # 'KRW-BTC', #Traingpair
-        count= 2   # 60 candles
-        #to="2022-04-10 16:00:00"  #yyyy-MM-dd HH:mm:ss
-    )
+# 20.04.2022: Upbit-Client is not used anymore because of errors
 
-    timestamp = datetime.fromisoformat(resp["result"][1]["candle_date_time_utc"]) + timedelta(hours=2)
+# Upbit: get the 1 minute candle for the tradingpair
+def get_1min_Upbit(tradingpair):
+    # client = Upbit()
+    # resp = client.Candle.Candle_minutes(
+    #     unit=1, # 1-min. candle
+    #     market= tradingpair, # 'KRW-BTC', #Traingpair
+    #     count= 2   # 60 candles
+    #     #to="2022-04-10 16:00:00"  #yyyy-MM-dd HH:mm:ss
+    # )
+    
+    url = f"https://api.upbit.com/v1/candles/minutes/1?market={tradingpair}&count=2"
+    req = requests.get(url)
+    json_response = json.loads(req.text)
+
+    print(json_response)
+    timestamp = datetime.fromisoformat(json_response[1]["candle_date_time_utc"]) + timedelta(hours=2)
 
     return {
-        "tradingpair": resp['result'][1]['market'],
+        "tradingpair": json_response[1]['market'],
         "exchange": "Upbit",
         "timestamp": str(timestamp),
-        "price_low": float(resp['result'][1]['low_price']),
-        "price_high": float(resp['result'][1]['high_price']),
-        "price_close": float(resp['result'][1]['trade_price']),
-        "volume": float(resp['result'][1]['candle_acc_trade_volume'])
+        "price_low": float(json_response[1]['low_price']),
+        "price_high": float(json_response[1]['high_price']),
+        "price_close": float(json_response[1]['trade_price']),
+        "volume": float(json_response[1]['candle_acc_trade_volume'])
     }
 
 

@@ -72,11 +72,24 @@ def auto_run():
         time_now = datetime.utcnow()
         if time_now.minute > 5 and count_minutes > 59:
             count_minutes = 0
-            step_2() # Only call every hour (max calls 100/day)
+            try:
+                step_2() # Only call every hour (max calls 100/day)
+            except:
+                time.sleep(10)
+                print("**************** API calls to FX-endpoint failed the first time ********************")
+                step_2() # Only call every hour (max calls 100/day)
+            
             print(time_now)
 
         if time_now.second > 30:
-            dict_1min_candles_org = step_1()
+            try:
+                dict_1min_candles_org = step_1()
+            except:
+                time.sleep(10)
+                print("**************** API calls to the exchanges failed the first time ********************")
+                dict_1min_candles_org = step_1()
+                    
+
             dict_1min_candles_in_USD = step_3(dict_1min_candles_org)
             step_4(dict_1min_candles_in_USD)
 
