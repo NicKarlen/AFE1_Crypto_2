@@ -36,13 +36,10 @@ fig, axes = plt.subplots(nrows=4, sharex=True)
 # Output a plot of the arbitrage index with the volume of Upbit behind
 df.plot(kind="line",x="timestamp", y=["vol_Upbit", "arbitrage_index"],
         color=["lightblue", "red"], secondary_y=["arbitrage_index"], ax=axes[0])
-# plt.show()
-
 
 # Output a plot of the arbitrage index with the volume of Coinbace behind
 df.plot(kind="line",x="timestamp", y=["vol_Coinbase", "arbitrage_index"],
         color=["lightblue", "red"], secondary_y=["arbitrage_index"], ax=axes[1])
-# plt.show()
 
 # Output a plot of the arbitrage index with the volume of Bitstamp behind
 df.plot(kind="line",x="timestamp", y=["vol_Bitstamp", "arbitrage_index"],

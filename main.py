@@ -29,10 +29,13 @@ def step_1():
 
 """ Get the exchange rate for the FX pairs needed (EUR-USD & KRW-USD) """
 def step_2():
-    dict_FX_rate = func.get_FX_exchange_rate("EUR","USD", rate_dezimal_too_long=False)
+
+    #dict_FX_rate = func.get_FX_exchange_rate_old("EUR","USD", rate_dezimal_too_long=False)
+    dict_FX_rate = func.get_FX_exchange_rate_new("EUR","USD")
     DB_func.write_FX_rate(dict_FX_rate)
 
-    dict_FX_rate = func.get_FX_exchange_rate("KRW","USD", rate_dezimal_too_long=True)
+    #dict_FX_rate = func.get_FX_exchange_rate_old("KRW","USD", rate_dezimal_too_long=True)
+    dict_FX_rate = func.get_FX_exchange_rate_new("KRW","USD")
     DB_func.write_FX_rate(dict_FX_rate)
 
 

@@ -78,7 +78,8 @@ def get_1min_Bitstamp(tradingpair):
 
 
 # Get the current FX exchange rates for KRW -> USD and EUR -> USD
-def get_FX_exchange_rate(base, quote, rate_dezimal_too_long):
+# Old FX API
+def get_FX_exchange_rate_old(base, quote, rate_dezimal_too_long):
 
     api_key = "529ea55ae0ef21448defc7955877504d06729ff4"
 
@@ -96,6 +97,25 @@ def get_FX_exchange_rate(base, quote, rate_dezimal_too_long):
         req = requests.get(url)
         json_response = json.loads(req.text)
         rate = float(json_response["rates"][quote]["rate"])
+
+    return {
+        "tradingpair": base + "-" + quote,
+        "timestamp": str(datetime.now()),
+        "base": base,
+        "quote": quote,
+        "rate_base_to_quote": rate
+    }
+
+# Get the current FX exchange rates for KRW -> USD and EUR -> USD
+# New FX API
+def get_FX_exchange_rate_new(base, quote):
+
+    api_key = "d08239f42c7a101949ee238c"
+    
+    url = f"https://v6.exchangerate-api.com/v6/{api_key}/pair/{base}/{quote}"
+    req = requests.get(url)
+    json_response = json.loads(req.text)
+    rate = float(json_response["conversion_rate"])
 
     return {
         "tradingpair": base + "-" + quote,

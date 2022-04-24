@@ -20,3 +20,11 @@ ACHTUNG:!!!!!
 Nur 100 calls pro Tag erlaubt!
 
 Hier kann geschaut werden wie viel man noch offen hat: https://getgeoapi.com/account/ 
+
+
+
+NEW ONLY Valid for 14Days
+
+api KEY : d08239f42c7a101949ee238c
+
+https://v6.exchangerate-api.com/v6/d08239f42c7a101949ee238c/pair/KRW/USD
