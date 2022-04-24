@@ -1,29 +1,28 @@
 https://getgeoapi.com/account/ 
 
 Account: gzq24732@jiooq.com
-
 API Key: 529ea55ae0ef21448defc7955877504d06729ff4
 
+ACHTUNG:!!!!!
+Nur 100 calls pro Tag erlaubt!
+Hier kann geschaut werden wie viel man noch offen hat: https://getgeoapi.com/account/ 
 
 Doku: https://currency.getgeoapi.com/documentation/#currency-list-endpoint 
-
 Die Daten werden 1mal pro Stunde aktualisiert.
 
 
 API: Für die Abfrage von FX währungen:
-
 https://api.getgeoapi.com/v2/currency/convert?api_key=529ea55ae0ef21448defc7955877504d06729ff4&from=USD&to=CHF&format=json 
 
 
-ACHTUNG:!!!!!
-
-Nur 100 calls pro Tag erlaubt!
-
-Hier kann geschaut werden wie viel man noch offen hat: https://getgeoapi.com/account/ 
 
 
+-------------------------------------------------------------------------------------------------------------
+New!! Date:24.04.2022 21:38
 
-NEW ONLY Valid for 14Days
+https://www.exchangerate-api.com/docs/pair-conversion-requests
+
+NEW ONLY Valid for 14Days (Free Trial active until 8 May 2022.)
 
 api KEY : d08239f42c7a101949ee238c
 
