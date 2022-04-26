@@ -16,7 +16,10 @@ def step_0():
     DB_func.create_Arb_idx()
 
 """ Get 1 min candle from the exchanges """
-def step_1(): 
+def step_1():
+    # IDEA: We cound put each exchange request in try except and return the same response we got 1 min ago if the request fails.
+    #       Safe the dict from one min ago and everytime we end the function we override the "old" dict with the new one.
+    #       I think this would have minimal impact on the analysis we are going to do.
     dict_1min_candles_org = []
     dict_1min_candles_org.append(func.get_1min_Upbit("KRW-BTC"))
     dict_1min_candles_org.append(func.get_1min_Coinbase("BTC-USD"))
