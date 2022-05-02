@@ -34,4 +34,4 @@ All the data is stored in an sql database (with sqlite)
 
 ## 3. Analyse data
 
-Not we analyse the date and check if there is any correlation between traded volume and the **arbitrage index**
+Now we analyse the date and check if there is any correlation between traded volume and the **arbitrage index**
