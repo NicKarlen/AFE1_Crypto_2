@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 
 
 # Insert the DB name which is stored in the forlder Analyse/DB
-db_name = "database_26042022_bis_02052022.db"
+db_name = "database_26042022_bis_08052022.db"
 
 # Create a connection to the database
 con = sqlite3.connect(f"Analyse/DB/{db_name}")
