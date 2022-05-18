@@ -35,19 +35,36 @@ fig, axes = plt.subplots(nrows=4, sharex=True)
 
 # Output a plot of the arbitrage index with the volume of Upbit behind
 df.plot(kind="line",x="timestamp", y=["vol_Upbit", "arbitrage_index"],
-        color=["lightblue", "red"], secondary_y=["arbitrage_index"], ax=axes[0])
+        color=["lightblue", "red"], secondary_y=["arbitrage_index"], ax=axes[0], grid=True)
+
+axes[0].set_ylabel('Volumen in BTC')
+axes[0].right_ax.set_ylabel('Arbitrage Index')
+axes[0].get_legend().set_bbox_to_anchor((0.12, 1))
 
 # Output a plot of the arbitrage index with the volume of Coinbace behind
 df.plot(kind="line",x="timestamp", y=["vol_Coinbase", "arbitrage_index"],
-        color=["lightblue", "red"], secondary_y=["arbitrage_index"], ax=axes[1])
+        color=["lightblue", "red"], secondary_y=["arbitrage_index"], ax=axes[1], grid=True)
+
+axes[1].set_ylabel('Volumen in BTC')
+axes[1].right_ax.set_ylabel('Arbitrage Index')
+axes[1].get_legend().set_bbox_to_anchor((0.12, 1))
 
 # Output a plot of the arbitrage index with the volume of Bitstamp behind
 df.plot(kind="line",x="timestamp", y=["vol_Bitstamp", "arbitrage_index"],
-        color=["lightblue", "red"], secondary_y=["arbitrage_index"], ax=axes[2])
+        color=["lightblue", "red"], secondary_y=["arbitrage_index"], ax=axes[2], grid=True)
+
+axes[2].set_ylabel('Volumen in BTC')
+axes[2].right_ax.set_ylabel('Arbitrage Index')
+axes[2].get_legend().set_bbox_to_anchor((0.12, 1))
 
 # Output a plot of the avg prices on exchanges
 df.plot(kind="line",x="timestamp", y=["avg_price_USD_Upbit", "avg_price_USD_Coinbase", "avg_price_USD_Bitstamp"],
-        color=["blue", "black", "green"], secondary_y=["arbitrage_index"], ax=axes[3])
+        color=["blue", "black", "green"], secondary_y=["arbitrage_index"], ax=axes[3], grid=True)
+
+axes[3].set_ylabel('Preis in USD')
+axes[3].set_xlabel('Zeitstempel')
+
+
 plt.show()
 
 
