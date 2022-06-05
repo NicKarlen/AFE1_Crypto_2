@@ -106,7 +106,7 @@ def get_1min_Bitstamp(tradingpair):
     if timestamp != now_1min_ago :
         timestamp = str(now_1min_ago)
         volume = 0
-        print('timestamp was not equal - tradingpair: ',tradingpair, "   Timestamp: ", str(timestamp))
+        print('timestamp was not equal - tradingpair: ',tradingpair, "   Timestamp  now_1min_ago:: ", str(timestamp))
         print("json_response:")
         print(json_response)
     else:
