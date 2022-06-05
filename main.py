@@ -99,7 +99,7 @@ def auto_run():
                 logging.warning("**************** API calls to FX-endpoint failed the first time ********************")
                 step_2() # Only call every hour (max calls 100/day)
             
-            print(time_now)
+            logging.info("Timestamp: %s   FX-Rates updated", time_now)
 
         if time_now.second > 30:
             try:
