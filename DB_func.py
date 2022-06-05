@@ -272,7 +272,7 @@ def read_One_Min_Candles(tradingpair):
     return res
 
 # Read Moving_avg_VWAP1h from the last minute from all 3 exchanges.
-def read_Moving_avg_VWAP1h():
+def read_Moving_avg_VWAP1h(base):
     # Connect to database 'database.db'
     conn = sqlite3.connect('data/database.db')
 
@@ -280,7 +280,7 @@ def read_Moving_avg_VWAP1h():
     cursor = conn.cursor()
 
     # Create query string
-    query = f"SELECT * FROM Moving_avg_VWAP1h ORDER BY timestamp DESC LIMIT 3"
+    query = f"SELECT * FROM Moving_avg_VWAP1h WHERE tradingpair LIKE '%{base}%' ORDER BY timestamp DESC LIMIT 3"
     cursor.execute(query)
 
     # fetch it from the db and print it to the console

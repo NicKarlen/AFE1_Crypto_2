@@ -6,7 +6,9 @@ import time
 
 """ Global variables """
 dict_1min_candles = []
-
+arr_Upbit_tradingpairs = ['KRW-BTC', 'KRW-ETH', 'KRW-ADA']
+arr_Coinbase_tradingpairs = ['BTC-USD', 'ETH-USD', 'ADA-USD']
+arr_Bitstamp_tradingpairs = ['btceur', 'etheur', 'adaeur']
 
 """ Create database """
 def step_0():
@@ -20,13 +22,20 @@ def step_1():
     # IDEA: We cound put each exchange request in try except and return the same response we got 1 min ago if the request fails.
     #       Safe the dict from one min ago and everytime we end the function we override the "old" dict with the new one.
     #       I think this would have minimal impact on the analysis we are going to do.
+
     dict_1min_candles_org = []
-    dict_1min_candles_org.append(func.get_1min_Upbit("KRW-BTC"))
-    dict_1min_candles_org.append(func.get_1min_Coinbase("BTC-USD"))
-    dict_1min_candles_org.append(func.get_1min_Bitstamp("btceur"))
-    # print(dict_1min_candles_org[0])
-    # print(dict_1min_candles_org[1])
-    # print(dict_1min_candles_org[2])
+    for tradingpair in arr_Upbit_tradingpairs:
+        dict_1min_candles_org.append(func.get_1min_Upbit(tradingpair))
+    for tradingpair in arr_Coinbase_tradingpairs:
+        dict_1min_candles_org.append(func.get_1min_Coinbase(tradingpair))
+    for tradingpair in arr_Bitstamp_tradingpairs:
+        dict_1min_candles_org.append(func.get_1min_Bitstamp(tradingpair))
+
+    # print
+    # for i in range(12):
+    #     print(dict_1min_candles_org[i])
+
+
     return dict_1min_candles_org
 
 
@@ -58,17 +67,21 @@ def step_4(dict_1min_candles_in_USD):
         dict_1min_candle = func.calc_avg_price_and_vwap1min(candle)
         DB_func.write_1min_candle_table(dict_1min_candle)
 
-        dict_1min_candles.append(dict_1min_candle)
+        # dict_1min_candles.append(dict_1min_candle)
 
 """ Calc moving avg. VWAP_1h """
 def step_5():
-    DB_func.write_VWAP1h(func.calc_VWAP_1h("KRW-BTC"))
-    DB_func.write_VWAP1h(func.calc_VWAP_1h("BTC-USD"))
-    DB_func.write_VWAP1h(func.calc_VWAP_1h("BTC-EUR"))
+    for pair in ['KRW-BTC', 'KRW-ETH', 'KRW-ADA']:
+        DB_func.write_VWAP1h(func.calc_VWAP_1h(pair))
+    for pair in ['BTC-USD', 'ETH-USD', 'ADA-USD']:
+        DB_func.write_VWAP1h(func.calc_VWAP_1h(pair))
+    for pair in ['BTC-EUR', 'ETH-EUR', 'ADA-EUR']:
+        DB_func.write_VWAP1h(func.calc_VWAP_1h(pair))
 
 """ Calc arbitrage index based on the moving avg. VWAP_1h """
 def step_6():
-    DB_func.write_arb_idx(func.calc_arb_idx())
+    for base in ['BTC', 'ETH', 'ADA']:
+        DB_func.write_arb_idx(func.calc_arb_idx(base))
 
 """ RUN modes """    
 def auto_run():
@@ -113,6 +126,8 @@ def manual_run():
     # dict_1min_candles_org = step_1()
     step_2() # Only call every hour (max calls 100/day)
     # dict_1min_candles_in_USD = step_3(dict_1min_candles_org)
+    # for i in range(12):
+    #     print(dict_1min_candles_in_USD[i])
     # step_4(dict_1min_candles_in_USD)
     # step_5()
     # step_6()
@@ -120,10 +135,15 @@ def manual_run():
 
 """ Main """
 if __name__ == "__main__":
-    print("Code running..........")
+    print("Code running..........", datetime.now())
 
     auto_run()
 
-    # manual_run()
+    # while True:
+    #     time_now = datetime.utcnow()
 
-    print("Code finished.........")
+    #     if time_now.second > 30:
+    #         manual_run()
+    #         time.sleep(30)
+
+    print("Code finished.........", datetime.now())

@@ -22,8 +22,8 @@ New!! Date:24.04.2022 21:38
 
 https://www.exchangerate-api.com/docs/pair-conversion-requests
 
-NEW ONLY Valid for 14Days (Free Trial active until 8 May 2022.)
+NEW ONLY Valid for 14Days (Free Trial active until 19 Jun 2022.)
 
-api KEY : d08239f42c7a101949ee238c
+api KEY : 008e6b12db4078b631c34abd
 
 https://v6.exchangerate-api.com/v6/d08239f42c7a101949ee238c/pair/KRW/USD
