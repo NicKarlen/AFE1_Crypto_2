@@ -33,6 +33,7 @@ def get_1min_Upbit(tradingpair):
     now = timestamp.now().replace(microsecond=0, second=0)
     now_1min_ago = now - timedelta(minutes=1)
     if timestamp != now_1min_ago :
+        # We check if the latest timestamp matches the one from 1 minute ago. if yes we will take the data from this candle.
         if timestamp0 == now_1min_ago:
             timestamp = str(now_1min_ago)
             index = 0
@@ -67,8 +68,13 @@ def get_1min_Coinbase(tradingpair):
     req = requests.get(url)
     json_response = json.loads(req.text)
 
+    # read timestamp
     timestamp = datetime.fromtimestamp(json_response[1][0])
 
+    #  if the timestamp of the requested data is not equal the prior minute we assume that the
+    #  tradingvolume in that minute was 0 and we there for set the timestamp to the current time
+    #  and the volume to 0 so it won't be considered in the calculation of the arbitrage index
+    #  and the script keeps running.
     now = timestamp.now().replace(microsecond=0, second=0)
     now_1min_ago = now - timedelta(minutes=1)
     if timestamp != now_1min_ago :
@@ -98,8 +104,13 @@ def get_1min_Bitstamp(tradingpair):
     req = requests.get(url)
     json_response = json.loads(req.text)
 
+    # read and adjust timestamp
     timestamp = datetime.fromtimestamp(int(json_response["data"]["ohlc"][0]["timestamp"]))
 
+    #  if the timestamp of the requested data is not equal the prior minute we assume that the
+    #  tradingvolume in that minute was 0 and we there for set the timestamp to the current time
+    #  and the volume to 0 so it won't be considered in the calculation of the arbitrage index
+    #  and the script keeps running.
     now = timestamp.now().replace(microsecond=0, second=0)
     now_1min_ago = now - timedelta(minutes=1)
     if timestamp != now_1min_ago :
