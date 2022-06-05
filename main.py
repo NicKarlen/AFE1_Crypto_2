@@ -3,6 +3,7 @@ from time import sleep
 import func
 import DB_func
 import time
+import logging
 
 """ Global variables """
 dict_1min_candles = []
@@ -95,7 +96,7 @@ def auto_run():
                 step_2() # Only call every hour (max calls 100/day)
             except:
                 time.sleep(10)
-                print("**************** API calls to FX-endpoint failed the first time ********************")
+                logging.warning("**************** API calls to FX-endpoint failed the first time ********************")
                 step_2() # Only call every hour (max calls 100/day)
             
             print(time_now)
@@ -105,7 +106,7 @@ def auto_run():
                 dict_1min_candles_org = step_1()
             except:
                 time.sleep(10)
-                print("**************** API calls to the exchanges failed the first time ********************")
+                logging.warning("**************** API calls to the exchanges failed the first time ********************")
                 dict_1min_candles_org = step_1()
                     
 
@@ -118,7 +119,8 @@ def auto_run():
                 step_6()
 
             count_minutes += 1
-            print(time_now, count_minutes)
+            logging.info("Timestamp: %s   Count Minutes: %s", time_now, count_minutes)
+            print(time_now, "   Count Minutes: ", count_minutes)
             time.sleep(30)
 
 def manual_run():
@@ -136,6 +138,9 @@ def manual_run():
 """ Main """
 if __name__ == "__main__":
     print("Code running..........", datetime.now())
+    # initialyse logger
+    logging.basicConfig(filename='ArbitrageIndex.log', encoding='utf-8', level=logging.INFO)
+    logging.info("Started logging,  Code running..........  %s", datetime.now())
 
     auto_run()
 

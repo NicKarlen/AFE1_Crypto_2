@@ -3,8 +3,7 @@ import requests
 import json
 from datetime import datetime, timedelta
 import DB_func
-
-
+import logging
 
 """
     We always take the 1-minute candle that is 1 min ago. 
@@ -37,16 +36,16 @@ def get_1min_Upbit(tradingpair):
         if timestamp0 == now_1min_ago:
             timestamp = str(now_1min_ago)
             index = 0
-            print('Upbit new candle did not yet open... - tradingpair: ',tradingpair, "   Timestamp now_1min_ago: ", str(timestamp))
-            print("json_response:")
-            print(json_response)
+            logging.warning('Upbit: new candle did not yet open... - tradingpair: %s   Timestamp now_1min_ago: %s', tradingpair, str(timestamp))
+            logging.warning("json_response:")
+            logging.warning(json_response)
             volume = float(json_response[index]['candle_acc_trade_volume'])
         else:
             timestamp = str(now_1min_ago)
             volume = 0
-            print('timestamp was not equal - tradingpair: ',tradingpair, "   Timestamp now_1min_ago: ", str(timestamp))
-            print("json_response:")
-            print(json_response)
+            logging.warning('Upbit: timestamp was not equal - tradingpair: %s  Timestamp  now_1min_ago: %s', tradingpair, str(timestamp))
+            logging.warning("json_response:")
+            logging.warning(json_response)
     else:
         volume = float(json_response[index]['candle_acc_trade_volume'])
 
@@ -75,9 +74,9 @@ def get_1min_Coinbase(tradingpair):
     if timestamp != now_1min_ago :
         timestamp = str(now_1min_ago)
         volume = 0
-        print('timestamp was not equal - tradingpair: ',tradingpair, "   Timestamp: ", str(timestamp))
-        print("json_response:")
-        print(json_response)
+        logging.warning('Coinbase: timestamp was not equal - tradingpair: %s  Timestamp  now_1min_ago: %s', tradingpair, str(timestamp))
+        logging.warning("json_response:")
+        logging.warning(json_response)
     else:
         volume = float(json_response[1][5])
 
@@ -106,9 +105,9 @@ def get_1min_Bitstamp(tradingpair):
     if timestamp != now_1min_ago :
         timestamp = str(now_1min_ago)
         volume = 0
-        print('timestamp was not equal - tradingpair: ',tradingpair, "   Timestamp  now_1min_ago:: ", str(timestamp))
-        print("json_response:")
-        print(json_response)
+        logging.warning('Bitstamp: timestamp was not equal - tradingpair: %s  Timestamp  now_1min_ago: %s', tradingpair, str(timestamp))
+        logging.warning("json_response:")
+        logging.warning(json_response)
     else:
         volume = float(json_response["data"]["ohlc"][0]["volume"])
 
