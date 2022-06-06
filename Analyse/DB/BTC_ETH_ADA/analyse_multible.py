@@ -30,6 +30,18 @@ df_ADA_EUR = pd.read_sql_query("SELECT timestamp, volume, avg_price_USD FROM One
 # Close our connection
 con.close()
 
+# Create two dataframes with the combined volume of BTC and ETH
+df_vol_BTC = df_KRW_BTC.loc[:,['timestamp', 'volume']].copy()
+df_vol_BTC = pd.merge(df_vol_BTC,df_BTC_USD[['timestamp', 'volume']], on=['timestamp'])
+df_vol_BTC = pd.merge(df_vol_BTC,df_BTC_EUR[['timestamp', 'volume']], on=['timestamp'])
+df_vol_BTC['Sum_Volume'] = df_vol_BTC['volume_x'] + df_vol_BTC['volume_y'] + df_vol_BTC['volume']
+
+# Create two dataframes with the combined volume of BTC and ETH
+df_vol_ETH = df_KRW_ETH.loc[:,['timestamp', 'volume']].copy()
+df_vol_ETH = pd.merge(df_vol_ETH,df_ETH_USD[['timestamp', 'volume']], on=['timestamp'])
+df_vol_ETH = pd.merge(df_vol_ETH,df_ETH_EUR[['timestamp', 'volume']], on=['timestamp'])
+df_vol_ETH['Sum_Volume'] = df_vol_ETH['volume_x'] + df_vol_ETH['volume_y'] + df_vol_ETH['volume']
+
 # Create a plot-window with tree seperate plots with a shared X axis
 fig, axes = plt.subplots(nrows=3, sharex=True)
 
@@ -46,12 +58,15 @@ axes[0].legend(labels=['Arbitrage Index von Bitcoin (BTC)', 'Arbitrage Index von
 df_KRW_BTC.plot(kind="line",x="timestamp", y=["avg_price_USD"], color=["blue"], ax=axes[1], grid=True)
 df_BTC_USD.plot(kind="line",x="timestamp", y=["avg_price_USD"], color=["black"], ax=axes[1], grid=True)
 df_BTC_EUR.plot(kind="line",x="timestamp", y=["avg_price_USD"], color=["green"], ax=axes[1], grid=True)
+df_vol_BTC.plot(kind="line",x="timestamp", y=["Sum_Volume"], color=["lightblue"], secondary_y=["Sum_Volume"], ax=axes[1], grid=True)
+
 
 # Output a plot of the avg prices on exchanges ETH
 #df_arb_ETH.plot(kind="line",x="timestamp", y=["arbitrage_index"], secondary_y=["arbitrage_index"], color=["red"], ax=axes[2], grid=True)
 df_KRW_ETH.plot(kind="line",x="timestamp", y=["avg_price_USD"], color=["blue"], ax=axes[2], grid=True)
 df_ETH_USD.plot(kind="line",x="timestamp", y=["avg_price_USD"], color=["black"], ax=axes[2], grid=True)
 df_ETH_EUR.plot(kind="line",x="timestamp", y=["avg_price_USD"], color=["green"], ax=axes[2], grid=True)
+df_vol_ETH.plot(kind="line",x="timestamp", y=["Sum_Volume"], color=["lightblue"], secondary_y=["Sum_Volume"], ax=axes[2], grid=True)
 
 # Output a plot of the avg prices on exchanges ADA
 # #df_arb_ADA.plot(kind="line",x="timestamp", y=["arbitrage_index"], secondary_y=["arbitrage_index"], color=["red"], ax=axes[3], grid=True)
@@ -59,15 +74,20 @@ df_ETH_EUR.plot(kind="line",x="timestamp", y=["avg_price_USD"], color=["green"],
 # df_ADA_USD.plot(kind="line",x="timestamp", y=["avg_price_USD"], color=["black"], ax=axes[3], grid=True)
 # df_ADA_EUR.plot(kind="line",x="timestamp", y=["avg_price_USD"], color=["green"], ax=axes[3], grid=True)
 
+lines, labels = axes[1].get_legend_handles_labels()
+lines1, labels1 = axes[1].right_ax.get_legend_handles_labels()
+axes[1].legend(lines+lines1, ['Preis von Upbit', 'Preis von Coinbase', 'Preis von Bitstamp', 'Summe der Volumen'], loc=0)
 axes[1].set_ylabel('Preis in USD')
 axes[1].set_xlabel('Zeitstempel')
-axes[1].legend(labels=['Preis von Upbit', 'Preis von Coinbase', 'Preis von Bitstamp'])
-#axes[1].right_ax.set_ylabel('Arbitrage Index')
+axes[1].right_ax.set_ylabel('Volumen in BTC')
 
+
+lines, labels = axes[2].get_legend_handles_labels()
+lines1, labels1 = axes[2].right_ax.get_legend_handles_labels()
+axes[2].legend(lines+lines1, ['Preis von Upbit', 'Preis von Coinbase', 'Preis von Bitstamp', 'Summe der Volumen'], loc=0)
 axes[2].set_ylabel('Preis in USD')
 axes[2].set_xlabel('Zeitstempel')
-axes[2].legend(labels=['Preis von Upbit', 'Preis von Coinbase', 'Preis von Bitstamp'])
-#axes[2].right_ax.set_ylabel('Arbitrage Index')
+axes[2].right_ax.set_ylabel('Volumen in ETH')
 
 # axes[3].set_ylabel('Preis in USD')
 # axes[3].set_xlabel('Zeitstempel')
