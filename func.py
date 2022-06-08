@@ -224,11 +224,17 @@ def calc_VWAP_1h(tradingpair):
         sum_VWAP1min += ele[5]
         sum_volume1min += ele[3]
     
+    # Division by 0
+    if sum_VWAP1min == 0 or sum_volume1min == 0:
+        moving_avg_VWAP_1h = 1
+    else:
+        moving_avg_VWAP_1h = round(sum_VWAP1min/sum_volume1min, 6)
+
     return {
         "tradingpair" : arr_data_last_hour[0][0],
         "timestamp" : arr_data_last_hour[0][1],
         "exchange" : arr_data_last_hour[0][2],
-        "moving_avg_VWAP1h" : round(sum_VWAP1min/sum_volume1min, 6),
+        "moving_avg_VWAP1h" : moving_avg_VWAP_1h,
         "timestamp_from" : arr_data_last_hour[59][1],
         "timestamp_to" : arr_data_last_hour[0][1]
     }

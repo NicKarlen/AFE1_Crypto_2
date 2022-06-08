@@ -1,0 +1,12 @@
+INFO:root:Started logging,  Code running..........  2022-06-08 18:19:55.042750
+WARNING:root:Bitstamp: timestamp was not equal - tradingpair: btceur  Timestamp  now_1min_ago: 2022-06-08 18:19:00
+WARNING:root:json_response:
+WARNING:root:{'data': {'pair': 'BTC/EUR', 'ohlc': [{'high': '28400.55', 'timestamp': '1654705200', 'volume': '0.00000000', 'low': '28400.55', 'close': '28400.55', 'open': '28400.55'}]}}
+WARNING:root:Bitstamp: timestamp was not equal - tradingpair: etheur  Timestamp  now_1min_ago: 2022-06-08 18:19:00
+WARNING:root:json_response:
+WARNING:root:{'data': {'pair': 'ETH/EUR', 'ohlc': [{'high': '1692.46', 'timestamp': '1654705200', 'volume': '0.00000000', 'low': '1692.46', 'close': '1692.46', 'open': '1692.46'}]}}
+WARNING:root:Bitstamp: timestamp was not equal - tradingpair: adaeur  Timestamp  now_1min_ago: 2022-06-08 18:19:00
+WARNING:root:json_response:
+WARNING:root:{'data': {'pair': 'ADA/EUR', 'ohlc': [{'high': '0.62053', 'timestamp': '1654705200', 'volume': '0.00000000', 'low': '0.62053', 'close': '0.62053', 'open': '0.62053'}]}}
+INFO:root:Started logging,  Code running..........  2022-06-08 18:20:36.468727
+INFO:root:Started logging,  Code running..........  2022-06-08 18:21:57.369441

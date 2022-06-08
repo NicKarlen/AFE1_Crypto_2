@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 
 
 # Insert the DB name which is stored in the forlder Analyse/DB
-db_name = "database.db"
+db_name = "database_bis_08062022.db"
 
 # Create a connection to the database
 con = sqlite3.connect(f"Analyse/DB/BTC_ETH_ADA/{db_name}")
@@ -77,9 +77,10 @@ df_vol_ETH.plot(kind="line",x="timestamp", y=["Sum_Volume"], color=["lightblue"]
 lines, labels = axes[1].get_legend_handles_labels()
 lines1, labels1 = axes[1].right_ax.get_legend_handles_labels()
 axes[1].legend(lines+lines1, ['BTC Preis von Upbit', 'BTC Preis von Coinbase', 'BTC Preis von Bitstamp', 'Summe der Volumen in BTC'], loc=0)
+axes[1].right_ax.set_ylabel('Volumen in BTC')
 axes[1].set_ylabel('Preis in USD')
 axes[1].set_xlabel('Zeitstempel')
-axes[1].right_ax.set_ylabel('Volumen in BTC')
+
 
 
 lines, labels = axes[2].get_legend_handles_labels()
