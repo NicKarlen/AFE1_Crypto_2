@@ -9,8 +9,8 @@ import logging
     We always take the 1-minute candle that is 1 min ago. 
     If we take the latest, the candle is still developing (not done yet)
 """
-# Upbit: Upbit-client do get the 1 minute candle for the tradingpair
-# 20.04.2022: Upbit-Client is not used anymore because of errors
+# Upbit-client pip: https://pypi.org/project/upbit-client/ . Used to get the 1 minute candle for the tradingpair
+# 20.04.2022: Upbit-Client is not used anymore because of errors!!!
 
 # Upbit: get the 1 minute candle for the tradingpair
 def get_1min_Upbit(tradingpair):
@@ -27,13 +27,14 @@ def get_1min_Upbit(tradingpair):
     timestamp0 = datetime.fromisoformat(json_response[0]["candle_date_time_utc"]) + timedelta(hours=2)
 
     #  if the timestamp of the requested data is not equal the prior minute we assume that the
-    #  tradingvolume in that minute was 0 and we there for set the timestamp to the current time
+    #  tradingvolume in that minute was 0 and we therefore set the timestamp to the current time
     #  and the volume to 0 so it won't be considered in the calculation of the arbitrage index
     #  and the script keeps running.
     now = timestamp.now().replace(microsecond=0, second=0)
     now_1min_ago = now - timedelta(minutes=1)
     if timestamp != now_1min_ago :
-        # We check if the latest timestamp matches the one from 1 minute ago. if yes we will take the data from this candle.
+        # We check if the latest timestamp matches the one from 1 minute ago. 
+        # if yes we will take the data from this candle, because we assume that the new candle has not opend yet.
         if timestamp0 == now_1min_ago:
             timestamp = str(now_1min_ago)
             index = 0

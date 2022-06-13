@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 
 
 # Insert the DB name which is stored in the forlder Analyse/DB
-db_name = "database_bis_08062022.db"
+db_name = 'database_08062022_bis_13062022.db'  # "database_bis_08062022.db" # 
 
 # Create a connection to the database
 con = sqlite3.connect(f"Analyse/DB/BTC_ETH_ADA/{db_name}")
@@ -48,7 +48,7 @@ fig, axes = plt.subplots(nrows=3, sharex=True)
 # Output a plot of the arbitrage index
 df_arb_BTC.plot(kind="line",x="timestamp", y=["arbitrage_index"], color=["red"], ax=axes[0], grid=True)
 df_arb_ETH.plot(kind="line",x="timestamp", y=["arbitrage_index"], color=["blue"], ax=axes[0], grid=True)
-# df_arb_ADA.plot(kind="line",x="timestamp", y=["arbitrage_index"], color=["black"], ax=axes[0], grid=True)
+#df_arb_ADA.plot(kind="line",x="timestamp", y=["arbitrage_index"], color=["black"], ax=axes[0], grid=True)
 
 axes[0].set_ylabel('Arbitrage Index')
 axes[0].legend(labels=['Arbitrage Index von Bitcoin (BTC)', 'Arbitrage Index von Ethereum (ETH)'])#, 'Arbitrage Index von Cardano (ADA)'])
@@ -58,7 +58,7 @@ axes[0].legend(labels=['Arbitrage Index von Bitcoin (BTC)', 'Arbitrage Index von
 df_KRW_BTC.plot(kind="line",x="timestamp", y=["avg_price_USD"], color=["blue"], ax=axes[1], grid=True)
 df_BTC_USD.plot(kind="line",x="timestamp", y=["avg_price_USD"], color=["black"], ax=axes[1], grid=True)
 df_BTC_EUR.plot(kind="line",x="timestamp", y=["avg_price_USD"], color=["green"], ax=axes[1], grid=True)
-df_vol_BTC.plot(kind="line",x="timestamp", y=["Sum_Volume"], color=["lightblue"], secondary_y=["Sum_Volume"], ax=axes[1], grid=True)
+#df_vol_BTC.plot(kind="line",x="timestamp", y=["Sum_Volume"], color=["lightblue"], secondary_y=["Sum_Volume"], ax=axes[1], grid=True)
 
 
 # Output a plot of the avg prices on exchanges ETH
@@ -66,7 +66,7 @@ df_vol_BTC.plot(kind="line",x="timestamp", y=["Sum_Volume"], color=["lightblue"]
 df_KRW_ETH.plot(kind="line",x="timestamp", y=["avg_price_USD"], color=["blue"], ax=axes[2], grid=True)
 df_ETH_USD.plot(kind="line",x="timestamp", y=["avg_price_USD"], color=["black"], ax=axes[2], grid=True)
 df_ETH_EUR.plot(kind="line",x="timestamp", y=["avg_price_USD"], color=["green"], ax=axes[2], grid=True)
-df_vol_ETH.plot(kind="line",x="timestamp", y=["Sum_Volume"], color=["lightblue"], secondary_y=["Sum_Volume"], ax=axes[2], grid=True)
+#df_vol_ETH.plot(kind="line",x="timestamp", y=["Sum_Volume"], color=["lightblue"], secondary_y=["Sum_Volume"], ax=axes[2], grid=True)
 
 # Output a plot of the avg prices on exchanges ADA
 # #df_arb_ADA.plot(kind="line",x="timestamp", y=["arbitrage_index"], secondary_y=["arbitrage_index"], color=["red"], ax=axes[3], grid=True)
@@ -74,26 +74,34 @@ df_vol_ETH.plot(kind="line",x="timestamp", y=["Sum_Volume"], color=["lightblue"]
 # df_ADA_USD.plot(kind="line",x="timestamp", y=["avg_price_USD"], color=["black"], ax=axes[3], grid=True)
 # df_ADA_EUR.plot(kind="line",x="timestamp", y=["avg_price_USD"], color=["green"], ax=axes[3], grid=True)
 
-lines, labels = axes[1].get_legend_handles_labels()
-lines1, labels1 = axes[1].right_ax.get_legend_handles_labels()
-axes[1].legend(lines+lines1, ['BTC Preis von Upbit', 'BTC Preis von Coinbase', 'BTC Preis von Bitstamp', 'Summe der Volumen in BTC'], loc=0)
-axes[1].right_ax.set_ylabel('Volumen in BTC')
+# lines, labels = axes[1].get_legend_handles_labels()
+# lines1, labels1 = axes[1].right_ax.get_legend_handles_labels()
+# axes[1].legend(lines+lines1, ['BTC Preis von Upbit', 'BTC Preis von Coinbase', 'BTC Preis von Bitstamp', 'Summe der Volumen in BTC'], loc=0)
+# axes[1].right_ax.set_ylabel('Volumen in BTC')
+
+axes[1].legend(['BTC Preis von Upbit', 'BTC Preis von Coinbase', 'BTC Preis von Bitstamp'])
 axes[1].set_ylabel('Preis in USD')
 axes[1].set_xlabel('Zeitstempel')
 
 
 
-lines, labels = axes[2].get_legend_handles_labels()
-lines1, labels1 = axes[2].right_ax.get_legend_handles_labels()
-axes[2].legend(lines+lines1, ['ETH Preis von Upbit', 'ETH Preis von Coinbase', 'ETH Preis von Bitstamp', 'Summe der Volumen in ETH'], loc=0)
+# lines, labels = axes[2].get_legend_handles_labels()
+# lines1, labels1 = axes[2].right_ax.get_legend_handles_labels()
+# axes[2].legend(lines+lines1, ['ETH Preis von Upbit', 'ETH Preis von Coinbase', 'ETH Preis von Bitstamp', 'Summe der Volumen in ETH'], loc=0)
+# axes[2].right_ax.set_ylabel('Volumen in ETH')
+
+axes[2].legend(['ETH Preis von Upbit', 'ETH Preis von Coinbase', 'ETH Preis von Bitstamp'])
 axes[2].set_ylabel('Preis in USD')
 axes[2].set_xlabel('Zeitstempel')
-axes[2].right_ax.set_ylabel('Volumen in ETH')
+
 
 # axes[3].set_ylabel('Preis in USD')
 # axes[3].set_xlabel('Zeitstempel')
 # axes[3].legend(labels=['Preis von Upbit', 'Preis von Coinbase', 'Preis von Bitstamp'])
 # #axes[3].right_ax.set_ylabel('Arbitrage Index')
+
+# Set titel
+fig.suptitle("Arbitrage Index für Bitcoin und Ethereum an den Börsen Coinbase, Bitstamp und Upbit (08.06.22 19:32 - 13.06.22 13:23)")
 
 
 plt.show()

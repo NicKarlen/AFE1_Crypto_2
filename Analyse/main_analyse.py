@@ -64,6 +64,11 @@ df.plot(kind="line",x="timestamp", y=["avg_price_USD_Upbit", "avg_price_USD_Coin
 axes[3].set_ylabel('Preis in USD')
 axes[3].set_xlabel('Zeitstempel')
 
+# Adjust the spacing at the bottom of the window
+plt.subplots_adjust(left=0.18, right=0.886)
+# Set titel
+fig.suptitle("Arbitrage Index für Bitcoin an den Börsen Coinbase, Bitstamp und Upbit (26.04 - 11.05 2022)")
+
 
 plt.show()
 
