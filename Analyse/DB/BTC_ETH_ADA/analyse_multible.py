@@ -101,7 +101,7 @@ axes[2].set_xlabel('Zeitstempel')
 # #axes[3].right_ax.set_ylabel('Arbitrage Index')
 
 # Set titel
-fig.suptitle("Arbitrage Index für Bitcoin und Ethereum an den Börsen Coinbase, Bitstamp und Upbit (08.06.22 19:32 - 13.06.22 13:23)")
+fig.suptitle("Arbitrage Index für Bitcoin und Ethereum an den Börsen Coinbase, Bitstamp und Upbit (08.06.22 19:32 - 16.06.22 06:31)")
 
 
 plt.show()
