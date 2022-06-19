@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 
 
 # Insert the DB name which is stored in the forlder Analyse/DB
-db_name = 'database_08062022_bis_13062022.db'  # "database_bis_08062022.db" # 
+db_name = 'database_08062022_bis_16062022.db'  # "database_bis_08062022.db" # 
 
 # Create a connection to the database
 con = sqlite3.connect(f"Analyse/DB/BTC_ETH_ADA/{db_name}")
